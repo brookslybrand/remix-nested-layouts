@@ -3,9 +3,13 @@ import { Meta, Links, Scripts, useRouteData, LiveReload } from "remix";
 import { Outlet } from "react-router-dom";
 
 import stylesUrl from "./styles/global.css";
+import tailwindUrl from "./styles/app.css";
 
 export let links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: stylesUrl }];
+  return [
+    { rel: "stylesheet", href: stylesUrl },
+    { rel: "stylesheet", href: tailwindUrl },
+  ];
 };
 
 export let loader: LoaderFunction = async () => {
