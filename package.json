@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "remix-app-template",
+  "name": "remix-nested-layouts",
   "description": "",
   "license": "",
   "scripts": {
@@ -10,12 +10,14 @@
     "predev": "touch ./app/styles/app.css",
     "dev": "npm-run-all --parallel watch:css remix:run",
     "build": "npm run build:css && remix build",
-    "start": "remix-serve build"
+    "start": "vercel dev"
   },
   "dependencies": {
     "@remix-run/node": "^0.17.5",
     "@remix-run/react": "^0.17.5",
     "@remix-run/serve": "^0.17.5",
+    "@remix-run/vercel": "^0.17.5",
+    "@vercel/node": "^1.11.0",
     "clsx": "^1.1.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -30,8 +32,9 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.3.0",
     "postcss-cli": "^8.3.1",
-    "tailwindcss": "^2.1.4",
-    "typescript": "^4.1.2"
+    "tailwindcss": "^2.0.4",
+    "typescript": "^4.1.2",
+    "vercel": "^23.0.0"
   },
   "engines": {
     "node": ">=14"
