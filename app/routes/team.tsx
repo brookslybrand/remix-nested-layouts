@@ -1,4 +1,4 @@
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useMatch } from "react-router-dom";
 import clsx from "clsx";
 import { json, useRouteData } from "remix";
 
@@ -38,9 +38,8 @@ export let loader: LoaderFunction = async () => {
 
 export default function TeamLayout() {
   const team = useRouteData<TeamMember[]>();
-
-  const { id: memberId } = useParams();
-  console.log({ memberId });
+  const match = useMatch("/team/:id");
+  const memberId = match?.params.id;
 
   return (
     <div

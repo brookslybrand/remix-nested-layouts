@@ -9,10 +9,6 @@ export let links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindUrl }];
 };
 
-export let loader: LoaderFunction = async () => {
-  return { date: new Date() };
-};
-
 function Document({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
