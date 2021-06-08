@@ -7,6 +7,7 @@
     "watch:css": "NODE_ENV=development postcss ./app/styles/tailwind.css -o ./app/styles/app.css -w",
     "build:css": "NODE_ENV=production postcss ./app/styles/tailwind.css -o ./app/styles/app.css",
     "remix:run": "remix run",
+    "predev": "touch ./app/styles/app.css",
     "dev": "npm-run-all --parallel watch:css remix:run",
     "build": "npm run build:css && remix build",
     "start": "remix-serve build"

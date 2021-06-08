@@ -51,21 +51,23 @@ export default function TeamLayout() {
           "px-4 py-6 bg-gray-300 relative h-full overflow-y-auto max-w-max"
         )}
       >
-        <ul className="space-y-2">
-          {team.map(({ id, name }) => (
-            <li key={id}>
-              <Link
-                to={`/team/${id}`}
-                className={clsx(
-                  "text-lg font-bold tracking-wide text-gray-800 hover:text-blue-800",
-                  id === memberId ? "text-blue-600" : null
-                )}
-              >
-                {name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <nav>
+          <ul className="space-y-2">
+            {team.map(({ id, name }) => (
+              <li key={id}>
+                <Link
+                  to={`/team/${id}`}
+                  className={clsx(
+                    "text-lg font-bold tracking-wide text-gray-800 hover:text-blue-800",
+                    id === memberId ? "text-blue-600" : null
+                  )}
+                >
+                  {name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </aside>
       <main className="flex-grow">
         <Outlet />
