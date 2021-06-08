@@ -1,7 +1,8 @@
-# Welcome to Remix!
+# Adding Nested/Persistent Layouts in Remix
 
-- [Remix Docs](https://docs.remix.run)
-- [Customer Dashboard](https://remix.run/dashboard)
+This code was created for a video titled ["How to Add Nested/Persistent Layouts in Remix"](https://www.youtube.com/watch?v=2QlxdDGqJ2c&ab_channel=ReactTipswithBrooksLybrand). It is an adaption of [this demo built in next.js](https://github.com/brookslybrand/next-nested-layouts), which I [implement in this video](https://www.youtube.com/watch?v=WOeLxL2DF3E&feature=youtu.be&ab_channel=ReactTipswithBrooksLybrand).
+
+Interested in Remix? Checkout the [Remix docs](https://docs.remix.run) or get [your own license](https://remix.run/buy)!
 
 ## Development
 
