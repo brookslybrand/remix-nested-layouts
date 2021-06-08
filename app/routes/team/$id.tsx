@@ -1,7 +1,16 @@
-import { useState, useRef, useEffect } from "react";
-import { useMatches, usePendingLocation } from "remix";
+import { useMatches } from "remix";
 
+import type { MetaFunction } from "remix";
 import type { TeamMember } from "../team";
+
+export let meta: MetaFunction = ({ parentsData, params }) => {
+  const { id: authorId } = params;
+  const team = parentsData["routes/team"] as TeamMember[];
+  const teamMember = team.find(({ id }) => id === authorId);
+  return {
+    title: `Team Member – ${teamMember?.name ?? "Not Found"}`,
+  };
+};
 
 export default function TeamMember() {
   const teamMember = useTeamMember();
