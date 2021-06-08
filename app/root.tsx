@@ -18,7 +18,7 @@ function Document({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="absolute inset-0 overflow-y-auto overflow-x-hidden bg-gray-100">
         {children}
 
         <Scripts />
