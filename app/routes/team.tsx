@@ -1,4 +1,4 @@
-import { Link, Outlet, useMatch } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import clsx from "clsx";
 import { json, useRouteData } from "remix";
 
@@ -19,7 +19,7 @@ export let loader: LoaderFunction = async () => {
   const response = await fetch(`${baseURL}/tracks`);
   const data = await response.json();
 
-  // get all of hte unique authors
+  // get all of the unique authors
   const authorIds = new Set(
     data.map(({ authorId }: { authorId: string }) => {
       return authorId;
@@ -38,8 +38,6 @@ export let loader: LoaderFunction = async () => {
 
 export default function TeamLayout() {
   const team = useRouteData<TeamMember[]>();
-  const match = useMatch("/team/:id");
-  const memberId = match?.params.id;
 
   return (
     <div
@@ -55,15 +53,13 @@ export default function TeamLayout() {
           <ul className="space-y-2">
             {team.map(({ id, name }) => (
               <li key={id}>
-                <Link
+                <NavLink
                   to={`/team/${id}`}
-                  className={clsx(
-                    "text-lg font-bold tracking-wide text-gray-800 hover:text-blue-800",
-                    id === memberId ? "text-blue-600" : null
-                  )}
+                  className="text-lg font-bold tracking-wide text-gray-800 hover:text-blue-800"
+                  activeClassName="text-blue-600"
                 >
                   {name}
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>
