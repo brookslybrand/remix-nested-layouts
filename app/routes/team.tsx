@@ -7,7 +7,7 @@ import { APP_BAR_HEIGHT } from "../components/nav-bar";
 import type { LoaderFunction } from "remix";
 
 // This API comes from the free "Learn GraphQL with Apollo" tutorials
-const baseURL = `https://odyssey-lift-off-rest-api.herokuapp.com`;
+export const baseURL = `https://odyssey-lift-off-rest-api.herokuapp.com`;
 
 export type TeamMember = {
   id: string;
@@ -28,8 +28,8 @@ export let loader: LoaderFunction = async () => {
   const members = await Promise.all(
     Array.from(authorIds).map(async (authorId) => {
       const response = await fetch(`${baseURL}/author/${authorId}`);
-      const data = await response.json();
-      return data as TeamMember;
+      const { id, name } = (await response.json()) as TeamMember;
+      return { id, name };
     })
   );
 
@@ -37,7 +37,7 @@ export let loader: LoaderFunction = async () => {
 };
 
 export default function TeamLayout() {
-  const team = useRouteData<TeamMember[]>();
+  const team = useRouteData<Omit<TeamMember, "photo">[]>();
 
   return (
     <div

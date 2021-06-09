@@ -1,19 +1,23 @@
-import { useMatches } from "remix";
+import { LoaderFunction, useRouteData } from "remix";
+
+import { baseURL } from "../team";
 
 import type { MetaFunction } from "remix";
 import type { TeamMember } from "../team";
 
-export let meta: MetaFunction = ({ parentsData, params }) => {
-  const { id: authorId } = params;
-  const team = parentsData["routes/team"] as TeamMember[];
-  const teamMember = team.find(({ id }) => id === authorId);
+export let meta: MetaFunction = ({ data }) => {
+  const name = isTeamMember(data) ? data.name : "Not Found";
   return {
-    title: `Team Member – ${teamMember?.name ?? "Not Found"}`,
+    title: `Team Member – ${name}`,
   };
 };
 
+export let loader: LoaderFunction = ({ params }) => {
+  return fetch(`${baseURL}/author/${params.id}`);
+};
+
 export default function TeamMember() {
-  const teamMember = useTeamMember();
+  const teamMember = useRouteData<TeamMember>();
 
   return (
     <>
@@ -35,37 +39,6 @@ export default function TeamMember() {
       )}
     </>
   );
-}
-
-function useTeamMember() {
-  const matches = useMatches();
-
-  let team: TeamMember[] = [];
-  let memberId: undefined | string;
-  let foundTeam = false;
-  let foundMemberId = false;
-  for (const { data, params } of matches) {
-    if (Array.isArray(data) && data.length > 0) {
-      // if the first element is a team member, we'll just assume the whole array is good
-      if (isTeamMember(data[0])) {
-        team = data;
-        foundTeam = true;
-      }
-    }
-    if (params.id !== undefined) {
-      memberId = params.id;
-      foundMemberId = true;
-    }
-
-    // this loop has served it's purpose
-    if (foundTeam && foundMemberId) {
-      break;
-    }
-  }
-
-  const teamMember = team.find(({ id }) => memberId === id);
-
-  return teamMember;
 }
 
 // taken from https://fettblog.eu/typescript-hasownproperty/
