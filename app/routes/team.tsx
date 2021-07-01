@@ -1,4 +1,4 @@
-import { Link, Outlet, useMatch } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import clsx from "clsx";
 import { json, useRouteData } from "remix";
 
@@ -7,7 +7,7 @@ import { APP_BAR_HEIGHT } from "../components/nav-bar";
 import type { LoaderFunction } from "remix";
 
 // This API comes from the free "Learn GraphQL with Apollo" tutorials
-const baseURL = `https://odyssey-lift-off-rest-api.herokuapp.com`;
+export const baseURL = `https://odyssey-lift-off-rest-api.herokuapp.com`;
 
 export type TeamMember = {
   id: string;
@@ -19,7 +19,7 @@ export let loader: LoaderFunction = async () => {
   const response = await fetch(`${baseURL}/tracks`);
   const data = await response.json();
 
-  // get all of hte unique authors
+  // get all of the unique authors
   const authorIds = new Set(
     data.map(({ authorId }: { authorId: string }) => {
       return authorId;
@@ -28,8 +28,8 @@ export let loader: LoaderFunction = async () => {
   const members = await Promise.all(
     Array.from(authorIds).map(async (authorId) => {
       const response = await fetch(`${baseURL}/author/${authorId}`);
-      const data = await response.json();
-      return data as TeamMember;
+      const { id, name } = (await response.json()) as TeamMember;
+      return { id, name };
     })
   );
 
@@ -37,9 +37,7 @@ export let loader: LoaderFunction = async () => {
 };
 
 export default function TeamLayout() {
-  const team = useRouteData<TeamMember[]>();
-  const match = useMatch("/team/:id");
-  const memberId = match?.params.id;
+  const team = useRouteData<Omit<TeamMember, "photo">[]>();
 
   return (
     <div
@@ -55,15 +53,13 @@ export default function TeamLayout() {
           <ul className="space-y-2">
             {team.map(({ id, name }) => (
               <li key={id}>
-                <Link
+                <NavLink
                   to={`/team/${id}`}
-                  className={clsx(
-                    "text-lg font-bold tracking-wide text-gray-800 hover:text-blue-800",
-                    id === memberId ? "text-blue-600" : null
-                  )}
+                  className="text-lg font-bold tracking-wide text-gray-800 hover:text-blue-800"
+                  activeClassName="text-blue-600"
                 >
                   {name}
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>
